@@ -68,6 +68,7 @@
     width: 100%;
     max-width: 300px;
     margin-bottom: 30px;
+
     
 
 }
@@ -128,10 +129,12 @@
 
 .profile-image img {
     border-radius: 50%;
+    border: 4px solid #2c3e50;
     width: 100px;
     height: 100px;
     object-fit: cover;
     margin-bottom: 15px;
+
 }
 
 .name {
