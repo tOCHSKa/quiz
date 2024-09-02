@@ -68,7 +68,7 @@ img {
     justify-content: space-between;
     align-items:center;
     height: 50px;
-    background-color: #F1F4FF;
+    background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(241,244,255,1) 100%);
     padding: 20px 30px;
     border-radius: 12px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);

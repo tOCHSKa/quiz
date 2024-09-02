@@ -4,6 +4,9 @@
         <h2>Inscription</h2>
   
         <div class="input-group">
+          <div class="password-label">
+            <label>Nom d'utilisateur</label>
+          </div>
           <input 
             type="text" 
             v-model="form.username" 
@@ -15,7 +18,6 @@
         <div class="input-group">
           <div class="password-label">
             <label>Password</label>
-            <a href="#" class="forgot-password">Mot de passe oublié ?</a>
           </div>
           <input 
             :type="visible ? 'text' : 'password'" 
@@ -28,6 +30,9 @@
           </span>
         </div>
         <div class="input-group">
+          <div class="password-label">
+            <label>Prénom</label>
+          </div>
           <input 
             v-model="form.firstname" 
             placeholder="Prénoms" 
@@ -36,6 +41,9 @@
           />
         </div>
         <div class="input-group">
+          <div class="password-label">
+            <label>Nom</label>
+          </div>
           <input 
             v-model="form.name" 
             placeholder="Noms" 
@@ -61,7 +69,8 @@ import { ref } from 'vue';
     name: '',
     firstname: '',
   });
-
+  const visible = ref(false);
+  
   const handleSubmit = () => {
     // Afficher les données dans la console
     console.log('Form data:', form.value);
