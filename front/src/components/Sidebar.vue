@@ -56,7 +56,6 @@
     flex-direction: column;
     width: 100%;
     max-width: 300px;
-    padding: 30px;
 }
 
 .profile-card {
@@ -118,8 +117,8 @@
 }
 
 .quizcard:hover {
-    background-color: #e0e0e0; /* Couleur de fond au survol */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre au survol */
+    transform: scale(1.05); 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
 }
 
 .quizcard:active {
@@ -157,7 +156,7 @@
 }
 
 .edit-profile {
-    background-color: #F1F4FF;
+    background-color: rgba(238,174,202,1);
     border: none;
     border-radius: 12px;
     color: #2c3e50;

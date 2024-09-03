@@ -16,10 +16,15 @@ app.use(cors());
 connectToDb();
 
 const userRoutes = require('./routes/users')
+const profilRoutes = require('./routes/profil')
 
 app.use('/api/users', userRoutes);
 app.use('/api/users/register', userRoutes);
 app.use('/api/users/login', userRoutes)
+
+
+app.use('/api/profil/', profilRoutes);
+app.use('/api/profil/add', profilRoutes);
 
 
 app.listen(process.env.PORT, () => {

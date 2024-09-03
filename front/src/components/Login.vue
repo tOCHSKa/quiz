@@ -79,8 +79,6 @@
           .then((response) => response.json())
           .then((data) => {
 
-        // Décoder le token pour obtenir les informations utilisateur
-        // const user = JSON.parse(atob(data.token.split(".")[1]));
         console.log(data);
 
         // Déclencher la mutation setUser dans le store Vuex

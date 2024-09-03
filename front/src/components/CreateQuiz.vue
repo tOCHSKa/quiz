@@ -2,16 +2,16 @@
 
     <div class="container">
         <div class="stats-card">
+            <div class="stats-content">
+                <div><p>Quiz</p></div>
+            </div>
             <div class="stats-icon">
                 <div class="stats-background">
                     <i class="fas fa-plus"></i>
                 </div>
-            </div>
-            <div class="stats-content">
-                <div><p>Quiz</p></div>
-            </div>
+            </div>  
         </div>
-        <div class="stats-card">
+        <!-- <div class="stats-card">
             <div class="stats-icon">
                 <div class="stats-background">
                     <i class="fas fa-plus"></i>
@@ -30,7 +30,7 @@
             <div class="stats-content">
                 <div><p>Badge</p></div>
             </div>
-        </div>
+        </div> -->
     </div>
 
 </template>

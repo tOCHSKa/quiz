@@ -1,7 +1,7 @@
 <template>
     <div class="stats-container">
         <div class="stats-card">
-            <div class="stats-icon">
+            <div class="stats-icon1">
                 <div class="stats-background">
                     <i class="fas fa-star"></i>
                 </div>
@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="stats-card">
-            <div class="stats-icon">
+            <div class="stats-icon2">
                 <div class="stats-background">
                     <i class="fas fa-trophy"></i>
                 </div>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="stats-card">
-            <div class="stats-icon">
+            <div class="stats-icon3">
                 <div class="stats-background">
                     <i class="fas fa-medal"></i>
                 </div>
@@ -62,8 +62,26 @@
     align-items: center;
 }
 
-.stats-icon {
-    background-color:aliceblue;
+.stats-icon1 {
+    background-color:#EFBDD5;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+.stats-icon2 {
+    background-color:#EFC8DE;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+.stats-icon3 {
+    background-color:#F0D3E6;
     border-radius: 50%;
     width: 50px;
     height: 50px;
