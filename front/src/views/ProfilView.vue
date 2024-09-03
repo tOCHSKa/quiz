@@ -11,7 +11,7 @@
     :maxReponse="4"
     @prev="goToPreviousPage"
     @next="goToNextPage"
-    @submit="submitQuiz"/>
+    @submit="handleSubmit"/>
   </div>
 
   <div class="rightbar">
@@ -38,7 +38,8 @@ import { ref } from 'vue'
 const quizzData = ref({
   nom: '',
   theme: '',
-  question: '',
+  reponses: [],  // Ajouter une propriété pour stocker les réponses
+  selectedAnswer: ''  // Ajouter une propriété pour stocker la réponse sélectionnée
 })
 
 
@@ -53,8 +54,14 @@ const goToNextPage = () => {
   console.log('Suivant')
 }
 
-const submitQuiz = () => {
-  console.log('Quiz soumis', quizzData.value)
+const handleSubmit = (submittedData) => {
+  quizzData.value.nom = submittedData.nom;
+  quizzData.value.theme = submittedData.theme;
+  quizzData.value.question = submittedData.question;
+  quizzData.value.reponses = submittedData.reponses;
+  quizzData.value.selectedAnswer = submittedData.selectedAnswer;
+
+  console.log('Quiz Data:', quizzData.value);
 }
 
 </script>

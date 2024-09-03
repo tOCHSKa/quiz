@@ -4,15 +4,15 @@
         <h2>Ajout de Quiz</h2>
       </div>
       <div class="modal-content">
-        <form class="modal-form" @submit.prevent="handleSubmit">
+        <form class="modal-form" @submit.prevent="emitSubmit">
           <v-text-field
-            v-model="props.quizz.nom"
+            v-model="quizz.nom"
             :rules="rules"
             label="Nom du Quiz"
             variant="solo-filled">
           </v-text-field>
           <v-text-field
-            v-model="props.quizz.theme"
+            v-model="quizz.theme"
             :rules="rules"
             label="Thématique"
             variant="solo-filled">
@@ -25,7 +25,7 @@
                 clearable
                 label="Ajouter une Question"
                 variant="solo-filled"
-                v-model="props.quizz.question">
+                v-model="quizz.question">
               </v-text-field>
               <div class="modal-icon" @click="addAnswer">
                 <div class="stats-background">
@@ -35,64 +35,66 @@
             </div>
           </div>
           <div class="modal-answer">
-            <div v-for="(answer, index) in answers" :key="index" class="answer-field">
+            <div v-for="(reponse, index) in quizz.reponses" :key="index" class="answer-field">
               <v-text-field
                 clearable
                 :label="'Réponse ' + (index + 1)"
                 variant="solo-filled"
-                v-model="answer.value">
+                v-model="reponse.value">
               </v-text-field>
               <div class="modal-radio">
                 <input 
                   type="radio" 
                   name="question" 
-                  :value="'Réponse ' + (index + 1)" 
+                  :value="index" 
                   v-model="selectedAnswer">
-                <label :for="'Réponse' + (index + 1)">{{answer.value}}</label>
+                <label :for="'Réponse' + (index + 1)">{{reponse.value}}</label>
               </div>
             </div>
           </div>
           <div class="modal-button">
-            <button class="prev-button" type="button" @click="emitPrev">Précèdent</button>
+            <button class="prev-button" type="button" @click="emitPrev">Précédent</button>
             <button class="next-button" type="button" @click="emitNext">Suivant</button>
           </div>
           <div class="modal-submit">
-            <button class="submit-button" type="submit" @click="emitSubmit">Créer le Quiz</button>
+            <button class="submit-button" type="submit">Créer le Quiz</button>
           </div>
         </form>
       </div>
     </div>
   </template>
   
-<script setup>
-
-import { ref, defineProps, defineEmits } from 'vue'
-
-const props = defineProps({
-  quizz: Object,
-  previousPage: Number,
-  nextPage: Number,
-  maxReponse: Number,
-})
-
-const emit = defineEmits(['prev', 'next', 'submit'])
-const answers = ref([{ value: '' }])
-const selectedAnswer = ref('')
-
-const addAnswer = () => {
-  if (answers.value.length < props.maxReponse) {
-    answers.value.push({ value: '' })
-  } else {
-    alert('Nombre maximum de réponses atteint')
+  <script setup>
+  import { ref, defineProps, defineEmits } from 'vue'
+  
+  const props = defineProps({
+    quizz: Object,
+    previousPage: Number,
+    nextPage: Number,
+    maxReponse: Number,
+  })
+  
+  const quizz = ref({ 
+    ...props.quizz, 
+    reponses: props.quizz.reponses || [{ value: '' }] 
+  })
+  
+  const emit = defineEmits(['prev', 'next', 'submit'])
+  const selectedAnswer = ref('')
+  
+  const addAnswer = () => {
+    if (quizz.value.reponses.length < props.maxReponse) {
+      quizz.value.reponses.push({ value: '' })
+    } else {
+      alert('Nombre maximum de réponses atteint')
+    }
   }
-}
-
-const emitPrev = () => emit('prev')
-const emitNext = () => emit('next')
-const emitSubmit = () => emit('submit', {selectedAnswer: selectedAnswer.value})
-
-    
-</script>
+  
+  const emitPrev = () => emit('prev')
+  const emitNext = () => emit('next')
+  const emitSubmit = () => emit('submit', {...quizz.value, selectedAnswer: selectedAnswer.value})
+  
+  </script>
 <style scoped>
 
 .container {
@@ -168,7 +170,7 @@ const emitSubmit = () => emit('submit', {selectedAnswer: selectedAnswer.value})
     width: 70%;
     font-size: 1em;
     cursor: pointer;
-    margin-top: 70px;
+    margin-top: 60px;
 }
 
 .next-button{
@@ -181,7 +183,7 @@ const emitSubmit = () => emit('submit', {selectedAnswer: selectedAnswer.value})
     width: 70%;
     font-size: 1em;
     cursor: pointer;
-    margin-top: 70px;
+    margin-top: 60px;
 }
 .submit-button{
 
