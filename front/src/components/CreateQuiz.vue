@@ -1,7 +1,7 @@
 <template>
 
     <div class="container">
-        <div class="stats-card">
+        <div class="stats-card" @click="emitShow">
             <div class="stats-content">
                 <div><p>Quiz</p></div>
             </div>
@@ -12,29 +12,38 @@
             </div>  
         </div>
         <!-- <div class="stats-card">
-            <div class="stats-icon">
-                <div class="stats-background">
-                    <i class="fas fa-plus"></i>
-                </div>
-            </div>
             <div class="stats-content">
                 <div><p>Question</p></div>
             </div>
-        </div>
-        <div class="stats-card">
             <div class="stats-icon">
                 <div class="stats-background">
                     <i class="fas fa-plus"></i>
                 </div>
             </div>
+        </div> -->
+        <div class="stats-card">
             <div class="stats-content">
                 <div><p>Badge</p></div>
             </div>
-        </div> -->
+            <div class="stats-icon">
+                <div class="stats-background">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+        </div>
     </div>
 
 </template>
 <script setup>
+import { ref, defineProps, defineEmits } from 'vue'
+
+const props = defineProps({
+})
+
+const emit = defineEmits(['hide', 'show'])
+const emitHide = () => emit('hide')
+const emitShow = () => emit('show')
+
 
 </script>
 <style scoped>

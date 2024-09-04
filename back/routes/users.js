@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
         }
 
         const [results] = await db.query('SELECT * FROM users'); // Exécuter la requête SQL
+
         res.status(200).json(results); // Envoyer les résultats au client
     } catch (err) {
         res.status(500).send(err); // Gestion des erreurs

@@ -1,36 +1,38 @@
 <template>
-    <div class="container">
-      <div class="modal-title">
-        <h2>Ajout de Quiz</h2>
-      </div>
-      <div class="modal-content">
-        <form class="modal-form" @submit.prevent="emitSubmit">
-          <v-text-field
-            v-model="quizz.nom"
-            :rules="rules"
-            label="Nom du Quiz"
-            variant="solo-filled">
-          </v-text-field>
-          <v-text-field
-            v-model="quizz.theme"
-            :rules="rules"
-            label="Thématique"
-            variant="solo-filled">
-          </v-text-field>
-          <div class="modal-question">
-            <p>Question :</p>
-            <div class="modal-question-add">
-              <v-text-field
-                class="modal-question-add-field"
-                clearable
-                label="Ajouter une Question"
-                variant="solo-filled"
-                v-model="quizz.question">
-              </v-text-field>
-              <div class="modal-icon" @click="addAnswer">
-                <div class="stats-background">
-                  <i class="fas fa-plus"></i>
-                </div>
+  <div v-if="show" class="container modal">
+    <div class="modal-close">
+      <button @click="emitClose">Fermé</button>
+    </div>
+    <div class="modal-title">
+      <h2>Ajout de Quiz</h2>
+    </div>
+    <div class="modal-content">
+      <form class="modal-form" @submit.prevent="emitSubmit">
+        <v-text-field
+          v-model="quizz.nom"
+          :rules="rules"
+          label="Nom du Quiz"
+          variant="solo-filled">
+        </v-text-field>
+        <v-text-field
+          v-model="quizz.theme"
+          :rules="rules"
+          label="Thématique"
+          variant="solo-filled">
+        </v-text-field>
+        <div class="modal-question">
+          <p>Question :</p>
+          <div class="modal-question-add">
+            <v-text-field
+              class="modal-question-add-field"
+              clearable
+              label="Question ?"
+              variant="solo-filled"
+              v-model="quizz.question">
+            </v-text-field>
+            <div class="modal-icon" @click="addAnswer">
+              <div class="stats-background">
+                <i class="fas fa-plus"></i>
               </div>
             </div>
           </div>
@@ -45,57 +47,98 @@
               <div class="modal-radio">
                 <input 
                   type="radio" 
-                  name="question" 
+                  :name="'question'" 
                   :value="index" 
-                  v-model="selectedAnswer">
+                  v-model="quizz.bonneReponse">
                 <label :for="'Réponse' + (index + 1)">{{reponse.value}}</label>
               </div>
             </div>
           </div>
-          <div class="modal-button">
-            <button class="prev-button" type="button" @click="emitPrev">Précédent</button>
-            <button class="next-button" type="button" @click="emitNext">Suivant</button>
-          </div>
-          <div class="modal-submit">
-            <button class="submit-button" type="submit">Créer le Quiz</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-button">
+          <button class="prev-button" type="button" @click="emitPrev">Précédent</button>
+          <button class="next-button" type="button" @click="emitNext">Suivant</button>
+        </div>
+        <div class="modal-submit">
+          <button class="submit-button" type="submit">Créer le Quiz</button>
+        </div>       
+      </form>
     </div>
-  </template>
+  </div>
+</template>
+
+
+
   
-  <script setup>
-  import { ref, defineProps, defineEmits } from 'vue'
-  
-  const props = defineProps({
-    quizz: Object,
-    previousPage: Number,
-    nextPage: Number,
-    maxReponse: Number,
-  })
-  
-  const quizz = ref({ 
-    ...props.quizz, 
-    reponses: props.quizz.reponses || [{ value: '' }] 
-  })
-  
-  const emit = defineEmits(['prev', 'next', 'submit'])
-  const selectedAnswer = ref('')
-  
-  const addAnswer = () => {
-    if (quizz.value.reponses.length < props.maxReponse) {
-      quizz.value.reponses.push({ value: '' })
-    } else {
-      alert('Nombre maximum de réponses atteint')
-    }
+<script setup>
+import { ref, defineProps, defineEmits, watch } from 'vue'
+
+const props = defineProps({
+  quizz: Object,
+  previousPage: Number,
+  nextPage: Number,
+  maxReponse: Number,
+  show: Boolean
+})
+
+const quizz = ref({
+  nom: '',
+  theme: '',
+  question: '',
+  reponses: [{ value: '' }], 
+  bonneReponse: ''
+})
+
+const emit = defineEmits(['prev', 'next', 'submit', 'close'])
+
+const addAnswer = () => {
+  if (quizz.value.reponses.length < props.maxReponse) {
+    quizz.value.reponses.push({ value: '' })
+  } else {
+    alert('Nombre maximum de réponses atteint')
   }
-  
-  const emitPrev = () => emit('prev')
-  const emitNext = () => emit('next')
-  const emitSubmit = () => emit('submit', {...quizz.value, selectedAnswer: selectedAnswer.value})
-  
-  </script>
+}
+
+const emitClose = () => {
+  // Réinitialiser les données du quiz lorsqu'on ferme le modal
+  quizz.value = {
+    nom: '',
+    theme: '',
+    question: '',
+    reponses: [{ value: '' }], 
+    bonneReponse: ''
+  }
+  emit('close')
+}
+
+const emitPrev = () => emit('prev')
+const emitNext = () => emit('next')
+const emitSubmit = () => {
+  emit('submit', { ...quizz.value })
+  // Réinitialiser le modal après soumission
+  emitClose()
+}
+
+// Mettre à jour quizz en fonction des props
+watch(() => props.quizz, (newVal) => {
+  quizz.value = { ...newVal }
+})
+</script>
+
+
 <style scoped>
+
+
+.modal-close {
+  display: flex;
+  justify-content: end;
+  align-items:center;
+  padding: 0 30px;
+}
+
+.modal.hidden {
+  display: none;
+}
 
 .container {
     background-color: #FDFDFD;
@@ -142,6 +185,11 @@
     justify-content: center;
     align-items:center;
     margin-top: 5px;
+    cursor: pointer;
+}
+
+.modal-icon:hover {
+  scale: 1.05;
 }
 
 .modal-answer {
@@ -215,6 +263,9 @@
     width: 100%;
 }
 
-
+button:hover {
+  scale: 1.05;
+  background: #F0D4E6;
+}
     
 </style>

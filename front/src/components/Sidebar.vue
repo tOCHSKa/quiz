@@ -211,4 +211,13 @@
     display: flex;
 }
 
+
+button:hover {
+    scale: 1.05;
+    background: #F0D4E6;
+  }
+
+  i:hover {
+    scale: 1.05;
+  }
 </style>
